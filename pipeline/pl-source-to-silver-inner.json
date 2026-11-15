@@ -185,7 +185,7 @@
 					"notebookPath": "/Users/rrana157@live.com/caresync-adb-repo/caresync-adb-rrana157/bronze_to_silver",
 					"baseParameters": {
 						"table_name": {
-							"value": "@activity('Read Table Details').output.firstRow.bronze_table_name",
+							"value": "@activity('Read Table Details').output.firstRow.silver_table_name",
 							"type": "Expression"
 						},
 						"landing_timestamp": {
