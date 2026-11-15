@@ -51,20 +51,19 @@
 					"isSequential": false,
 					"activities": [
 						{
-							"name": "Set variable1",
-							"type": "SetVariable",
+							"name": "Ingest from source to silver",
+							"type": "ExecutePipeline",
 							"dependsOn": [],
 							"policy": {
-								"secureOutput": false,
 								"secureInput": false
 							},
 							"userProperties": [],
 							"typeProperties": {
-								"variableName": "tables",
-								"value": {
-									"value": "@item()",
-									"type": "Expression"
-								}
+								"pipeline": {
+									"referenceName": "pl-source-to-silver-inner",
+									"type": "PipelineReference"
+								},
+								"waitOnCompletion": true
 							}
 						}
 					]
