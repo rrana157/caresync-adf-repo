@@ -1,0 +1,63 @@
+{
+	"name": "pl-source-to-silver-main",
+	"properties": {
+		"activities": [
+			{
+				"name": "read source tables list",
+				"type": "Lookup",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 1,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "AzureSqlSource",
+						"sqlReaderQuery": {
+							"value": "SELECT \n    table_id \nFROM \n    ctrl.table_config \nWHERE \n    is_active = 1 AND \n    source_system = '@{pipeline().parameters.source_system}';",
+							"type": "Expression"
+						},
+						"queryTimeout": "02:00:00",
+						"partitionOption": "None"
+					},
+					"dataset": {
+						"referenceName": "ds_azuresql_tbl",
+						"type": "DatasetReference"
+					},
+					"firstRowOnly": false
+				}
+			},
+			{
+				"name": "Ingest All Tables",
+				"type": "ForEach",
+				"dependsOn": [
+					{
+						"activity": "read source tables list",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"items": {
+						"value": "@activity('read source tables list').output.value",
+						"type": "Expression"
+					},
+					"isSequential": false
+				}
+			}
+		],
+		"parameters": {
+			"source_system": {
+				"type": "string",
+				"defaultValue": "neon_postgres"
+			}
+		},
+		"annotations": []
+	}
+}
