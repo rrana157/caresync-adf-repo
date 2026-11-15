@@ -63,7 +63,13 @@
 									"referenceName": "pl-source-to-silver-inner",
 									"type": "PipelineReference"
 								},
-								"waitOnCompletion": true
+								"waitOnCompletion": true,
+								"parameters": {
+									"table_id": {
+										"value": "@item()",
+										"type": "Expression"
+									}
+								}
 							}
 						}
 					]
