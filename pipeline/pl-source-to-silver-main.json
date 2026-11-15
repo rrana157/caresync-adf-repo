@@ -48,7 +48,26 @@
 						"value": "@activity('read source tables list').output.value",
 						"type": "Expression"
 					},
-					"isSequential": false
+					"isSequential": false,
+					"activities": [
+						{
+							"name": "Set variable1",
+							"type": "SetVariable",
+							"dependsOn": [],
+							"policy": {
+								"secureOutput": false,
+								"secureInput": false
+							},
+							"userProperties": [],
+							"typeProperties": {
+								"variableName": "tables",
+								"value": {
+									"value": "@item()",
+									"type": "Expression"
+								}
+							}
+						}
+					]
 				}
 			}
 		],
@@ -56,6 +75,11 @@
 			"source_system": {
 				"type": "string",
 				"defaultValue": "neon_postgres"
+			}
+		},
+		"variables": {
+			"tables": {
+				"type": "Integer"
 			}
 		},
 		"annotations": []
